@@ -7,5 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="org.eclipse.ecf:org.apache.httpcomponents.httpclient:4.5.2.v20170210-0925" level="project" />
+    <orderEntry type="library" name="org.eclipse.ecf:org.apache.httpcomponents.httpcore:4.4.6.v20170210-0925" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.6.2" level="project" />
+    <orderEntry type="library" name="org.eclipse.birt.runtime:org.apache.commons.logging:1.1.1.v201101211721" level="project" />
   </component>
 </module>
