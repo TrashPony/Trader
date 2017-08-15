@@ -106,16 +106,14 @@ class ReadHistoryMarket {
 
         if(params.equals("first")) {
             if (avgPriceBids < market.topOrderBids) {
-                if(log) System.out.println("Непрошел тест на среднее");
                 return false;
             }
         }
-        /////////////////АНАЛИЗ ХАЙПА///////////////
+
         if (countSell < countBuy && sumSellBTC < sumSellBTC) {
             double haip = percentageCalculator(countSell, countBuy);
             if (haip > 40) {
                 if(log) {
-                    System.out.println("------------------------- Ситация 1 ----------------------------");
                     Log.log("------------------------- Ситация 1 ----------------------------");
                 }
                 return true;
@@ -126,7 +124,6 @@ class ReadHistoryMarket {
             double haip2 = percentageCalculator(count25Sell, count25Buy);
             if (haip2 > 70) {
                 if(log) {
-                    System.out.println("------------------------- Ситация 2 ----------------------------");
                     Log.log("------------------------- Ситация 2 ----------------------------");
                 }
                 return true;
@@ -141,7 +138,6 @@ class ReadHistoryMarket {
 
         if (timeCount > 6) {
             if(log) {
-                System.out.println("------------------------- Ситация 3 ----------------------------");
                 Log.log("------------------------- Ситация 3 ----------------------------");
             }
             return true;
@@ -150,7 +146,6 @@ class ReadHistoryMarket {
         if (count25Sell > count25Buy && sumSell25BTC > sumBuy25BTC) {
             if (count25Sell > 15 && count5Buy > 3) {
                 if(log) {
-                    System.out.println("------------------------- Ситация 4 ----------------------------");
                     Log.log("------------------------- Ситация 4 ----------------------------");
                 }
                 return true;

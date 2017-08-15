@@ -50,17 +50,17 @@ class Analyzer {
         boolean sumCap = market.summ25QuantityOrderBidsBook > (market.summ25QuantityOrderAsksBook * 1.5);
 
         if(log) {
-            System.out.println("Анализ " + market.name);
+            Log.log("Анализ " + market.name);
 
-            System.out.println(". Спрос-предлоежние:        " + openOrdersCheck);
-            System.out.println(". AVG 24h:                  " + lastPriceCheck);
-            System.out.println(". Коммисия:                 " + differenceAskBindCheck);
-            System.out.println(". Второй оредар на покупку: " + secondCheck);
-            System.out.println(". Анализ спроса:            " + sumCap);
-            System.out.println(". История:                  " + historyProf);
-            System.out.println("");
-            System.out.println(". Результат                 " + (sumCap && (secondCheck || differenceAskBindCheck) && historyProf));
-            System.out.println("-----------------------------------------");
+            Log.log(". Спрос-предлоежние:        " + openOrdersCheck);
+            Log.log(". AVG 24h:                  " + lastPriceCheck);
+            Log.log(". Коммисия:                 " + differenceAskBindCheck);
+            Log.log(". Второй оредар на покупку: " + secondCheck);
+            Log.log(". Анализ спроса:            " + sumCap);
+            Log.log(". История:                  " + historyProf);
+            Log.log("");
+            Log.log(". Результат                 " + (sumCap && (secondCheck || differenceAskBindCheck) && historyProf));
+            Log.log("-----------------------------------------");
         }
 
         if (sumCap && (secondCheck || differenceAskBindCheck) && historyProf) {

@@ -29,32 +29,25 @@ class CalculatorProfit {
 
             if(market.topOrderAsks > profit) {
                 startDifference = Utilites.percentageCalculator(startProfit, market.topOrderAsks);
-                System.out.print("Стартовый профит: " + startProfit);
                 Log.log("Стартовый профит: " + startProfit);
                 profit = market.topOrderAsks;
-                System.out.println(" новый профит составляет: " + profit + " он поднялся на " + startDifference + " % ");
                 Log.log(" новый профит составляет: " + profit + " он поднялся на " + startDifference + " % ");
             } else {
                 difference = Utilites.percentageCalculator(profit, market.topOrderAsks);
                 startDifference = Utilites.percentageCalculator(startProfit, market.topOrderAsks);
 
                 if (difference != oldDifference) {
-                    System.out.println("Стартовый профит: " + startProfit + " он изменился относительно успешной продажи на " + startDifference + " % ");
-                    System.out.println("Нарастающий профит составляет " + profit + " он упал на " + difference + " % ");
                     Log.log("Стартовый профит: " + startProfit + " он изменился относительно успешной продажи на " + startDifference + " % ");
                     Log.log("Нарастающий профит составляет " + profit + " он упал на " + difference + " % ");
                 }
                if(difference < -2 && (Utilites.percentageCalculator(profit, market.secondOrderAsk)) < -2){
                     market = new Market(market.name, market.ALT);
-                    System.out.println("Цена упала на - 2% относительно второго заказа: " + Utilites.percentageCalculator(profit, market.secondOrderAsk));
-                    System.out.println("Экстренный перезакуп!!!");
                     Log.log("Цена упала на - 2% относительно второго заказа: " + Utilites.percentageCalculator(profit, market.secondOrderAsk));
                     Log.log("Экстренный перезакуп!!!");
                     uuidOrder = Trader.tradeSell(market, startProfit);
                 }
 
                 if(!Analyzer.analyzer(market,"",false) && startDifference > 0.3){
-                    System.out.println("Алгоритм посчитал что рынок больше не эффективен");
                     Log.log("Алгоритм посчитал что рынок больше не эффективен");
                     uuidOrder = Trader.tradeSell(market, startProfit);
                 }
@@ -93,7 +86,6 @@ class CalculatorProfit {
             /////////////////////КОСТЫЛЬ//////////////////////////////////////////
 
             if(market.availableALT * (market.topOrderAsks - 0.00000001) < 0.0005 && market.openOrders.get(0) == null){
-                System.out.println("Монеты на продажу кончились " + (market.availableALT * (market.topOrderAsks - 0.00000001)));
                 Log.log("Монеты на продажу кончились " + (market.availableALT * (market.topOrderAsks - 0.00000001)));
                 successfulSell = true;
             }

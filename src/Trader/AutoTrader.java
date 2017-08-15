@@ -17,11 +17,12 @@ import static com.sun.corba.se.impl.util.Utility.printStackTrace;
 public class AutoTrader {
     private static Bittrex wrapper = new Bittrex();
 
+
     public static void main (String args[]) {
         boolean analyzMarket = false;
 
         HashMap<String, String> marketMap = new HashMap<>();
-        /*marketMap.put("BTC-MUSIC", "MUSIC");
+        marketMap.put("BTC-MUSIC", "MUSIC");
         marketMap.put("BTC-NEO", "NEO");
         marketMap.put("BTC-OMG", "OMG");
         marketMap.put("BTC-ETH", "ETH");
@@ -46,8 +47,8 @@ public class AutoTrader {
         marketMap.put("BTC-LUN", "LUN");
         marketMap.put("BTC-XVG", "XVG");
         marketMap.put("BTC-CFI", "CFI");
-        marketMap.put("BTC-ETC", "ETC");*/
-        /*marketMap.put("BTC-ARK", "ARK");
+        marketMap.put("BTC-ETC", "ETC");
+        marketMap.put("BTC-ARK", "ARK");
         marketMap.put("BTC-EDG", "EDG");
         marketMap.put("BTC-SWIFT", "SWIFT");
         marketMap.put("BTC-LMC", "LMC");
@@ -55,8 +56,8 @@ public class AutoTrader {
         marketMap.put("BTC-VTR", "VTR");
         marketMap.put("BTC-XMG", "XMG");
         marketMap.put("BTC-XBB", "XBB");
-        marketMap.put("BTC-NEOS", "NEOS");*/
-        marketMap.put("BTC-XMY", "XMY");
+        marketMap.put("BTC-NEOS", "NEOS");
+
 
         while(true) {
             for (String key : marketMap.keySet()) {
@@ -81,7 +82,6 @@ public class AutoTrader {
             /////////////////////КОСТЫЛЬ//////////////////////////////////////////
 
             double profit = tradeBuy(market);
-            System.out.println("Выставил на покупку");
             log("Выставил на покупку");
             try {
                 TimeUnit.SECONDS.sleep(10);
@@ -97,11 +97,9 @@ public class AutoTrader {
             if (!(market.openOrders.get(0) == null )) { // && (market.availableALT * (market.topOrderAsks - 0.00000001) < 0.0005))
                 for (HashMap<String, String> map : market.openOrders) {
                     if (map.get("OrderType").equals("LIMIT_BUY")) {
-                        System.out.println("Купить не удалось.");
                         log("Купить не удалось.");
                         wrapper.cancelOrder(map.get("OrderUuid"));
                         if (analyzer(market, "first", false)) {
-                            System.out.println("Новая попытка");
                             log("Новая попытка");
                             actions(new Market(market.name, market.ALT));
                         }
