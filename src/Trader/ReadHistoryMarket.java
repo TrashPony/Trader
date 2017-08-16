@@ -37,6 +37,7 @@ class ReadHistoryMarket {
         ArrayList<Double> allPriceAsks = new ArrayList<>();
         ArrayList<Double> allPriceBids = new ArrayList<>();
 
+
         ArrayList<String> time = new ArrayList<>();
         int timeCount = 0;
 
@@ -80,17 +81,38 @@ class ReadHistoryMarket {
         /////////////////Находим средние значения///////
         double sum = 0;
         double intervalX = 1;
-
+        double sumStart = 0;
+        double sumEnd = 0;
+        boolean courseAsks = false;
+        boolean courseBids = false;
         for (int i = 0; i < allPriceAsks.size(); i++) {
+            if(allPriceAsks.size() > 20){
+                if(i < 10) sumStart = sumStart + allPriceAsks.get(i);
+                if(11 > allPriceAsks.size() - i) sumEnd = sumEnd + allPriceAsks.get(i);
+            }
             sum = sum + allPriceAsks.get(i);
         }
         avgPriceAsks = sum / allPriceAsks.size();
 
         sum = 0;
+        sumStart = 0;
+        sumEnd = 0;
         for (int i = 0; i < allPriceBids.size(); i++) {
+            if(allPriceBids.size() > 20){
+                if(i < 10) sumStart = sumStart + allPriceBids.get(i);
+                if(11 > allPriceBids.size() - i) sumEnd = sumEnd + allPriceBids.get(i);
+            }
             sum = sum + allPriceBids.get(i);
         }
         avgPriceBids = sum / allPriceBids.size();
+
+        if (sumStart/10 < sumEnd/10) courseAsks = true;
+        if (sumStart/10 < sumEnd/10) courseBids = true;
+
+        if(courseAsks && courseBids){
+            System.out.println("Курс растет.");
+            return true;
+        }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////

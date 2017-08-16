@@ -22,42 +22,12 @@ public class AutoTrader {
         boolean analyzMarket = false;
 
         HashMap<String, String> marketMap = new HashMap<>();
-        marketMap.put("BTC-MUSIC", "MUSIC");
-        marketMap.put("BTC-NEO", "NEO");
-        marketMap.put("BTC-OMG", "OMG");
-        marketMap.put("BTC-ETH", "ETH");
-        marketMap.put("BTC-BCC", "BCC");
-        marketMap.put("BTC-CVC", "CVC");
-        marketMap.put("BTC-STRAT", "STRAT");
-        marketMap.put("BTC-QTUM", "QTUM");
-        marketMap.put("BTC-PAY", "PAY");
-        marketMap.put("BTC-LTC", "LTC");
-        marketMap.put("BTC-XRP", "XRP");
-        marketMap.put("BTC-BTS", "BTS");
-        marketMap.put("BTC-BAT", "BAT");
-        marketMap.put("BTC-XEL", "XEL");
-        marketMap.put("BTC-WAVES", "WAVES");
-        marketMap.put("BTC-XEM", "XEM");
-        marketMap.put("BTC-DGB", "DGB");
-        marketMap.put("BTC-LGD", "LGD");
-        marketMap.put("BTC-GBYTE", "GBYTE");
-        marketMap.put("BTC-SC", "SC");
-        marketMap.put("BTC-GAME", "GAME");
-        marketMap.put("BTC-MTL", "MTL");
-        marketMap.put("BTC-LUN", "LUN");
-        marketMap.put("BTC-XVG", "XVG");
-        marketMap.put("BTC-CFI", "CFI");
-        marketMap.put("BTC-ETC", "ETC");
+
+        marketMap.put("BTC-ARK", "ARK");
         marketMap.put("BTC-ARK", "ARK");
         marketMap.put("BTC-EDG", "EDG");
-        marketMap.put("BTC-SWIFT", "SWIFT");
-        marketMap.put("BTC-LMC", "LMC");
-        marketMap.put("BTC-AEON", "AEON");
-        marketMap.put("BTC-VTR", "VTR");
-        marketMap.put("BTC-XMG", "XMG");
-        marketMap.put("BTC-XBB", "XBB");
-        marketMap.put("BTC-NEOS", "NEOS");
-
+        marketMap.put("BTC-DGB", "DGB");
+        marketMap.put("BTC-WAVES", "WAVES");
 
         while(true) {
             for (String key : marketMap.keySet()) {
