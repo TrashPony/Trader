@@ -46,7 +46,7 @@ public class AutoTrader {
 
     static void actions (Market market) {
         if(analyzer(market, "first", true)) {
-            wrapper.setAuthKeysFromTextFile("keys.txt");
+            wrapper.setAuthKeysFromTextFile("C:\\keys.txt");
             /////////////////////КОСТЫЛЬ//////////////////////////////////////////
             market = new Market(market.name, market.ALT);
             /////////////////////КОСТЫЛЬ//////////////////////////////////////////

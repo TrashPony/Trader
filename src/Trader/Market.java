@@ -45,8 +45,8 @@ class Market {
         this.name = name;
         this.ALT = ALT;
 
-        wrapper.setAuthKeysFromTextFile("keys.txt");
-        String rawMarketSummary = wrapper.getMarketSummary(name);
+        wrapper.setAuthKeysFromTextFile("C:\\keys.txt");
+            String rawMarketSummary = wrapper.getMarketSummary(name);
         HashMap<String, String> marketSummary = readResponse(rawMarketSummary);
 
         lastPrice = Double.parseDouble(marketSummary.get("Last"));

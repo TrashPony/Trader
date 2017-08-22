@@ -37,8 +37,6 @@ class ReadHistoryMarket {
         ArrayList<Double> allPriceAsks = new ArrayList<>();
         ArrayList<Double> allPriceBids = new ArrayList<>();
 
-
-        ArrayList<String> time = new ArrayList<>();
         int timeCount = 0;
 
         for (HashMap<String, String> map : market.marketHistory) {
@@ -62,7 +60,6 @@ class ReadHistoryMarket {
                 if (map.get("OrderType").equals("BUY")) {
                     sumBuy25BTC = sumBuy25BTC + Double.parseDouble(map.get("Total"));
                     count25Buy++;
-                    time.add(map.get("TimeStamp"));
                 }
             }
 
@@ -149,12 +146,6 @@ class ReadHistoryMarket {
                     Log.log("------------------------- Ситация 2 ----------------------------");
                 }
                 return true;
-            }
-        }
-
-        for (int i = 0; i < time.size(); i++) {
-            if (timeCount < Collections.frequency(time, time.get(i))) {
-                timeCount = Collections.frequency(time, time.get(i));
             }
         }
 
