@@ -65,8 +65,13 @@ class Analyzer {
 
         if (sumCap && (secondCheck || differenceAskBindCheck) && historyProf) {
             action = true;
+            if(!differenceAskBindCheck){
+                market.extraTrade = true;
+            }
         }
 
         return action;
     }
+
+
 }

@@ -23,63 +23,82 @@ public class AutoTrader {
 
         HashMap<String, String> marketMap = new HashMap<>();
 
-        marketMap.put("BTC-ARK", "ARK");
-        marketMap.put("BTC-ARK", "ARK");
-        marketMap.put("BTC-EDG", "EDG");
-        marketMap.put("BTC-DGB", "DGB");
-        marketMap.put("BTC-WAVES", "WAVES");
+        marketMap.put("BTC-BCC", "BCC");
+        marketMap.put("BTC-XRP", "XRP");
+        marketMap.put("BTC-ETH", "ETH");
+        marketMap.put("BTC-ETC", "ETC");
 
-        while(true) {
-            for (String key : marketMap.keySet()) {
-                Market market = new Market(key, marketMap.get(key));
+        marketMap.put("BTC-LTC", "LTC");
+        marketMap.put("BTC-NEO", "NEO");
+        marketMap.put("BTC-LSK", "LSK");
 
-                try {
+        marketMap.put("BTC-QTUM", "QTUM");
+        marketMap.put("BTC-VTC", "VTC");
+        marketMap.put("BTC-KORE", "KORE");
+
+        try {
+
+            while (true) {
+                for (String key : marketMap.keySet()) {
+                    Market market = new Market(key, marketMap.get(key));
+
                     TimeUnit.SECONDS.sleep(3);
-                } catch (Exception e) {
-                    printStackTrace();
-                }
 
-                actions(market);
+                    actions(market);
+                }
             }
+        } catch (Exception e) {
+            System.err.println(e);
+            main(null);
         }
     }
 
     static void actions (Market market) {
-        if(analyzer(market, "first", true)) {
-            wrapper.setAuthKeysFromTextFile("C:\\keys.txt");
-            /////////////////////КОСТЫЛЬ//////////////////////////////////////////
-            market = new Market(market.name, market.ALT);
-            /////////////////////КОСТЫЛЬ//////////////////////////////////////////
+        try {
+            if (analyzer(market, "first", false)) {
 
-            double profit = tradeBuy(market);
-            log("Выставил на покупку");
-            try {
-                TimeUnit.SECONDS.sleep(10);
-            } catch (Exception e) {
-                printStackTrace();
-            }
+                wrapper.setAuthKeysFromTextFile("keys.txt");
+                /////////////////////КОСТЫЛЬ//////////////////////////////////////////
+                analyzer(market, "first", true);
+                market = new Market(market.name, market.ALT);
+                /////////////////////КОСТЫЛЬ//////////////////////////////////////////
+                double profit;
 
-            /////////////////////КОСТЫЛЬ//////////////////////////////////////////
-            String rawOpenOrders = wrapper.getOpenOrders(market.name);
-            market.openOrders = Bittrex.getMapsFromResponse(rawOpenOrders);
-            /////////////////////КОСТЫЛЬ//////////////////////////////////////////
-
-            if (!(market.openOrders.get(0) == null )) { // && (market.availableALT * (market.topOrderAsks - 0.00000001) < 0.0005))
-                for (HashMap<String, String> map : market.openOrders) {
-                    if (map.get("OrderType").equals("LIMIT_BUY")) {
-                        log("Купить не удалось.");
-                        wrapper.cancelOrder(map.get("OrderUuid"));
-                        if (analyzer(market, "first", false)) {
-                            log("Новая попытка");
-                            actions(new Market(market.name, market.ALT));
-                        }
-                    } else {
-                        CalculatorProfit.calculatorProfit(market, profit);
-                    }
+                if(market.extraTrade) {
+                    profit = tradeBuy(market, true);
+                } else {
+                    profit = tradeBuy(market, false);
                 }
-            } else {
-                CalculatorProfit.calculatorProfit(market, profit);
+                log("Выставил на покупку");
+
+                TimeUnit.SECONDS.sleep(10);
+
+
+                /////////////////////КОСТЫЛЬ//////////////////////////////////////////
+                String rawOpenOrders = wrapper.getOpenOrders(market.name);
+                market.openOrders = Bittrex.getMapsFromResponse(rawOpenOrders);
+                /////////////////////КОСТЫЛЬ//////////////////////////////////////////
+
+                if (!(market.openOrders.get(0) == null)) { // && (market.availableALT * (market.topOrderAsks - 0.00000001) < 0.0005))
+                    for (HashMap<String, String> map : market.openOrders) {
+                        if (map.get("OrderType").equals("LIMIT_BUY")) {
+                            log("Купить не удалось.");
+                            wrapper.cancelOrder(map.get("OrderUuid"));
+                            if (analyzer(market, "first", false)) {
+                                log("Новая попытка");
+                                actions(new Market(market.name, market.ALT));
+                            }
+                        } else {
+                            CalculatorProfit.calculatorProfit(market, profit);
+                        }
+                    }
+                } else {
+                    CalculatorProfit.calculatorProfit(market, profit);
+                }
             }
+        } catch (Exception e){
+            System.err.println(e);
+            actions(market);
         }
     }
 }

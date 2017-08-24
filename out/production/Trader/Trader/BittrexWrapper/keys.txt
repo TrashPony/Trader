@@ -1,0 +1,2 @@
+- apikey: "4b6e646075734815be860ce9144883f0"
+- secret: "8b92a63679364328bc40c7cff03ab1ec"

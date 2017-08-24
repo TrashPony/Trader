@@ -58,8 +58,8 @@ public class Bittrex {
 
 			String apikeyLine = scan.nextLine(), secretLine = scan.nextLine();
 
-			apikey = "37321b4c3cdb47719f57896667b51a67"; //apikeyLine.substring(apikeyLine.indexOf("\"") + 1, apikeyLine.lastIndexOf("\""));
-			secret = "253e7bb31ada4f7988cc2bb9151dc0bd"; //secretLine.substring(secretLine.indexOf("\"") + 1, secretLine.lastIndexOf("\""));
+			apikey = apikeyLine.substring(apikeyLine.indexOf("\"") + 1, apikeyLine.lastIndexOf("\""));
+			secret = secretLine.substring(secretLine.indexOf("\"") + 1, secretLine.lastIndexOf("\""));
 
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 

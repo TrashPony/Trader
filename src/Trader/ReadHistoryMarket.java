@@ -89,6 +89,7 @@ class ReadHistoryMarket {
             }
             sum = sum + allPriceAsks.get(i);
         }
+
         avgPriceAsks = sum / allPriceAsks.size();
 
         sum = 0;
@@ -105,11 +106,6 @@ class ReadHistoryMarket {
 
         if (sumStart/10 < sumEnd/10) courseAsks = true;
         if (sumStart/10 < sumEnd/10) courseBids = true;
-
-        if(courseAsks && courseBids){
-            System.out.println("Курс растет.");
-            return true;
-        }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,40 +128,94 @@ class ReadHistoryMarket {
         if (countSell < countBuy && sumSellBTC < sumSellBTC) {
             double haip = percentageCalculator(countSell, countBuy);
             if (haip > 40) {
-                if(log) {
-                    Log.log("------------------------- Ситация 1 ----------------------------");
+                if(courseAsks && courseBids){
+                    if(log) {
+                        Log.log("------------------------- Ситация 1 ----------------------------");
+                        System.out.println("Курс растет.");
+                    }
+                    return true;
                 }
-                return true;
             }
         }
 
         if (count25Sell < count25Buy && sumSell25BTC < sumBuy25BTC) {
             double haip2 = percentageCalculator(count25Sell, count25Buy);
             if (haip2 > 70) {
-                if(log) {
-                    Log.log("------------------------- Ситация 2 ----------------------------");
+                if(courseAsks && courseBids){
+                    if(log) {
+                        Log.log("------------------------- Ситация 2 ----------------------------");
+                        System.out.println("Курс растет.");
+                    }
+                    return true;
                 }
-                return true;
             }
         }
 
         if (timeCount > 6) {
-            if(log) {
-                Log.log("------------------------- Ситация 3 ----------------------------");
-            }
-            return true;
-        }
-
-        if (count25Sell > count25Buy && sumSell25BTC > sumBuy25BTC) {
-            if (count25Sell > 15 && count5Buy > 3) {
+            if(courseAsks && courseBids){
                 if(log) {
-                    Log.log("------------------------- Ситация 4 ----------------------------");
+                    Log.log("------------------------- Ситация 3 ----------------------------");
+                    System.out.println("Курс растет.");
                 }
                 return true;
             }
         }
 
+        if (count25Sell > count25Buy && sumSell25BTC > sumBuy25BTC) {
+            if (count25Sell > 15 && count5Buy > 3) {
+                if(courseAsks && courseBids){
+                    if(log) {
+                        Log.log("------------------------- Ситация 4 ----------------------------");
+                        System.out.println("Курс растет.");
+                    }
+                    return true;
+                }
+            }
+        }
+
         return false;
+    }
+
+    static boolean secondReadHistrory(Market market, String params, boolean log){
+
+        int countSell = 0;
+        int count5Sell = 0;
+        int count25Sell = 0;
+        int countBuy = 0;
+        int count5Buy = 0;
+        int count25Buy = 0;
+        int count = 0;
+
+        for (HashMap<String, String> map : market.marketHistory) {
+
+            if (count < 5) {
+                if (map.get("OrderType").equals("SELL")) {
+                    count5Sell++;
+                }
+                if (map.get("OrderType").equals("BUY")) {
+                    count5Buy++;
+                }
+            }
+
+            if (count < 25) {
+                if (map.get("OrderType").equals("SELL")) {
+                    count25Sell++;
+                }
+                if (map.get("OrderType").equals("BUY")) {
+                    count25Buy++;
+                }
+            }
+
+            if (map.get("OrderType").equals("SELL")) {
+                countSell++;
+            }
+            if (map.get("OrderType").equals("BUY")) {
+                countBuy++;
+            }
+            count++;
+        }
+
+        return count5Sell > 3 && count25Sell > 13;
     }
 
     private static ArrayList<Coordinate> createCoordinates(ArrayList<Double> y, double intervalX){

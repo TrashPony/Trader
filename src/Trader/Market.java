@@ -32,6 +32,7 @@ class Market {
     double summ25QuantityOrderAsksBook = 0;
     double summ25QuantityOrderBidsBook = 0;
 
+    boolean extraTrade;
 
     List<HashMap<String, String>> marketHistory;
     List<HashMap<String, String>> openOrders;
@@ -45,8 +46,8 @@ class Market {
         this.name = name;
         this.ALT = ALT;
 
-        wrapper.setAuthKeysFromTextFile("C:\\keys.txt");
-            String rawMarketSummary = wrapper.getMarketSummary(name);
+        wrapper.setAuthKeysFromTextFile("keys.txt");
+        String rawMarketSummary = wrapper.getMarketSummary(name);
         HashMap<String, String> marketSummary = readResponse(rawMarketSummary);
 
         lastPrice = Double.parseDouble(marketSummary.get("Last"));
