@@ -55,21 +55,25 @@ public class AutoTrader {
 
     static void actions (Market market) {
         try {
-            if (analyzer(market, "first", false)) {
+            boolean extra = false;
+            double profit;
 
+            if (analyzer(market, "first", false)) {
                 wrapper.setAuthKeysFromTextFile("keys.txt");
-                /////////////////////КОСТЫЛЬ//////////////////////////////////////////
+
                 analyzer(market, "first", true);
+                extra = market.extraTrade;
+                /////////////////////КОСТЫЛЬ//////////////////////////////////////////
                 market = new Market(market.name, market.ALT);
                 /////////////////////КОСТЫЛЬ//////////////////////////////////////////
-                double profit;
 
-                if(market.extraTrade) {
+                if(extra) {
+                    Log.log("Экстра закуп","info");
                     profit = tradeBuy(market, true);
                 } else {
                     profit = tradeBuy(market, false);
                 }
-                log("Выставил на покупку");
+                log("Выставил на покупку","info");
 
                 TimeUnit.SECONDS.sleep(10);
 
@@ -82,10 +86,10 @@ public class AutoTrader {
                 if (!(market.openOrders.get(0) == null)) { // && (market.availableALT * (market.topOrderAsks - 0.00000001) < 0.0005))
                     for (HashMap<String, String> map : market.openOrders) {
                         if (map.get("OrderType").equals("LIMIT_BUY")) {
-                            log("Купить не удалось.");
+                            log("Купить не удалось.","info");
                             wrapper.cancelOrder(map.get("OrderUuid"));
                             if (analyzer(market, "first", false)) {
-                                log("Новая попытка");
+                                log("Новая попытка","info");
                                 actions(new Market(market.name, market.ALT));
                             }
                         } else {

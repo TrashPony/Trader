@@ -25,7 +25,7 @@ class Trader {
 
         double fee = market.availableBTC * 0.0026;
         double ALT = (market.availableBTC - fee) / priceByu;
-        System.out.println("Покупаю " + market.ALT + " по " + Double.toString(priceByu));
+        Log.log("Покупаю " + market.ALT + " по " + Double.toString(priceByu), "info");
         wrapper.buyLimit(market.name, Double.toString(ALT), Double.toString(priceByu));
         return market.availableBTC/ALT;
     }
@@ -39,11 +39,11 @@ class Trader {
         if ((startProfit < market.topOrderBids && (Utilites.percentageCalculator(startProfit, market.topOrderBids)) > 0.3) || extra) {
             priceSell = market.topOrderBids - 0.00000001;
             startDifference = Utilites.percentageCalculator(startProfit, market.topOrderBids);
-            Log.log("Продаю относительно начального закупа с выгодой " + startDifference);
+            Log.log("Продаю относительно начального закупа с выгодой " + startDifference, "info");
         } else {
             priceSell = market.topOrderAsks - 0.00000001;
             startDifference = Utilites.percentageCalculator(startProfit, market.topOrderAsks);
-            Log.log("Продаю относительно начального закупа с выгодой " + startDifference);
+            Log.log("Продаю относительно начального закупа с выгодой " + startDifference, "info");
         }
 
         order = wrapper.sellLimit(market.name, Double.toString(market.availableALT), Double.toString(priceSell));

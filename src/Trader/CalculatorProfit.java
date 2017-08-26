@@ -29,26 +29,25 @@ class CalculatorProfit {
 
                 if (market.topOrderAsks > profit) {
                     startDifference = Utilites.percentageCalculator(startProfit, market.topOrderAsks);
-                    Log.log("Стартовый профит: " + startProfit);
                     profit = market.topOrderAsks;
-                    Log.log(" новый профит составляет: " + profit + " он поднялся на " + startDifference + " % ");
+                    Log.log("СП: " + startProfit + " НП: " + profit + " up " + startDifference + " % ", "debug");
                 } else {
                     difference = Utilites.percentageCalculator(profit, market.topOrderAsks);
                     startDifference = Utilites.percentageCalculator(startProfit, market.topOrderAsks);
 
                     if (difference != oldDifference) {
-                        Log.log("Стартовый профит: " + startProfit + " он изменился относительно успешной продажи на " + startDifference + " % ");
-                        Log.log("Нарастающий профит составляет " + profit + " он упал на " + difference + " % ");
+                        Log.log("СП: " + startProfit + " Changed " + startDifference + " % ", "debug");
+                        Log.log("НП: " + profit + " Changed " + difference + " % ", "debug");
                     }
                     if (difference < -2 && (Utilites.percentageCalculator(profit, market.secondOrderAsk)) < -2) {
                         market = new Market(market.name, market.ALT);
-                        Log.log("Цена упала на - 2% относительно второго заказа: " + Utilites.percentageCalculator(profit, market.secondOrderAsk));
-                        Log.log("Экстренный перезакуп!!!");
+                        Log.log("Цена упала на - 2% относительно второго заказа: " + Utilites.percentageCalculator(profit, market.secondOrderAsk), "debug");
+                        Log.log("Экстренный перезакуп!!!", "debug");
                         uuidOrder = Trader.tradeSell(market, startProfit, true);
                     }
 
                     if (!ReadHistoryMarket.secondReadHistrory(market, "", false) && startDifference > 0.3) {
-                        Log.log("Алгоритм посчитал что рынок больше не эффективен");
+                        Log.log("Алгоритм посчитал что рынок больше не эффективен", "debug");
                         uuidOrder = Trader.tradeSell(market, startProfit, false);
                     }
                     oldDifference = difference;
@@ -82,7 +81,7 @@ class CalculatorProfit {
                 /////////////////////КОСТЫЛЬ//////////////////////////////////////////
 
                 if (market.availableALT * (market.topOrderAsks - 0.00000001) < 0.0005 && market.openOrders.get(0) == null) {
-                    Log.log("Монеты на продажу кончились " + (market.availableALT * (market.topOrderAsks - 0.00000001)));
+                    Log.log("Монеты на продажу кончились " + (market.availableALT * (market.topOrderAsks - 0.00000001)), "debug");
                     successfulSell = true;
                 }
             }

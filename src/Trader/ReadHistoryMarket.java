@@ -37,10 +37,7 @@ class ReadHistoryMarket {
         ArrayList<Double> allPriceAsks = new ArrayList<>();
         ArrayList<Double> allPriceBids = new ArrayList<>();
 
-        int timeCount = 0;
-
         for (HashMap<String, String> map : market.marketHistory) {
-
             if (count < 5) {
                 if (map.get("OrderType").equals("SELL")) {
                     sumSell5BTC = sumSell5BTC + Double.parseDouble(map.get("Total"));
@@ -122,6 +119,10 @@ class ReadHistoryMarket {
         if(params.equals("first")) {
             if (avgPriceBids < market.topOrderBids) {
                 return false;
+            } else {
+                if(log) {
+                    Log.log("Средняя цена за 200 сделок выше стакана", "info");
+                }
             }
         }
 
@@ -130,7 +131,7 @@ class ReadHistoryMarket {
             if (haip > 40) {
                 if(courseAsks && courseBids){
                     if(log) {
-                        Log.log("------------------------- Ситация 1 ----------------------------");
+                        Log.log("------------------------- Ситация 1 ----------------------------", "info");
                         System.out.println("Курс растет.");
                     }
                     return true;
@@ -143,36 +144,13 @@ class ReadHistoryMarket {
             if (haip2 > 70) {
                 if(courseAsks && courseBids){
                     if(log) {
-                        Log.log("------------------------- Ситация 2 ----------------------------");
+                        Log.log("------------------------- Ситация 2 ----------------------------", "info");
                         System.out.println("Курс растет.");
                     }
                     return true;
                 }
             }
         }
-
-        if (timeCount > 6) {
-            if(courseAsks && courseBids){
-                if(log) {
-                    Log.log("------------------------- Ситация 3 ----------------------------");
-                    System.out.println("Курс растет.");
-                }
-                return true;
-            }
-        }
-
-        if (count25Sell > count25Buy && sumSell25BTC > sumBuy25BTC) {
-            if (count25Sell > 15 && count5Buy > 3) {
-                if(courseAsks && courseBids){
-                    if(log) {
-                        Log.log("------------------------- Ситация 4 ----------------------------");
-                        System.out.println("Курс растет.");
-                    }
-                    return true;
-                }
-            }
-        }
-
         return false;
     }
 
@@ -214,7 +192,6 @@ class ReadHistoryMarket {
             }
             count++;
         }
-
         return count5Sell > 3 && count25Sell > 13;
     }
 

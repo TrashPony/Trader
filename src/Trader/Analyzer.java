@@ -50,17 +50,17 @@ class Analyzer {
         boolean sumCap = market.summ25QuantityOrderBidsBook > (market.summ25QuantityOrderAsksBook * 1.5);
 
         if(log) {
-            Log.log("Анализ " + market.name);
+            Log.log("Анализ " + market.name,"info");
 
-            Log.log(". Спрос-предлоежние:        " + openOrdersCheck);
-            Log.log(". AVG 24h:                  " + lastPriceCheck);
-            Log.log(". Коммисия:                 " + differenceAskBindCheck);
-            Log.log(". Второй оредар на покупку: " + secondCheck);
-            Log.log(". Анализ спроса:            " + sumCap);
-            Log.log(". История:                  " + historyProf);
-            Log.log("");
-            Log.log(". Результат                 " + (sumCap && (secondCheck || differenceAskBindCheck) && historyProf));
-            Log.log("-----------------------------------------");
+            Log.log(". Спрос-предлоежние:        " + openOrdersCheck,"info");
+            Log.log(". AVG 24h:                  " + lastPriceCheck,"info");
+            Log.log(". Коммисия:                 " + differenceAskBindCheck,"info");
+            Log.log(". Второй оредар на покупку: " + secondCheck,"info");
+            Log.log(". Анализ спроса:            " + sumCap,"info");
+            Log.log(". История:                  " + historyProf,"info");
+            Log.log("","info");
+            Log.log(". Результат                 " + (sumCap && (secondCheck || differenceAskBindCheck) && historyProf),"info");
+            Log.log("-----------------------------------------","info");
         }
 
         if (sumCap && (secondCheck || differenceAskBindCheck) && historyProf) {
@@ -69,9 +69,6 @@ class Analyzer {
                 market.extraTrade = true;
             }
         }
-
         return action;
     }
-
-
 }

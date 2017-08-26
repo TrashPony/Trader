@@ -8,15 +8,24 @@ import java.io.IOException;
  */
 class Log {
 
-    static void log(String log) {
-        try(FileWriter writer = new FileWriter("D:\\проги\\trader\\Trader\\src\\Trader\\logFile.txt", true))
-        {
-            writer.write(log);
-            writer.append('\n');
-            System.out.println(log);
+    static void log(String log, String verbouse) {
+        System.out.println(log);
+        if (verbouse.equals("debug") || verbouse.equals("info")) {
+            try (FileWriter writer = new FileWriter("D:\\проги\\trader\\Trader\\src\\Trader\\debugLog.txt", true)) {
+                writer.write(log);
+                writer.append('\n');
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
-        catch(IOException ex){
-            System.out.println(ex.getMessage());
+
+        if (verbouse.equals("info")) {
+            try (FileWriter writer = new FileWriter("D:\\проги\\trader\\Trader\\src\\Trader\\logFile.txt", true)) {
+                writer.write(log);
+                writer.append('\n');
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 }
